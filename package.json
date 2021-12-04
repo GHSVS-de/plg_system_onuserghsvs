@@ -1,0 +1,80 @@
+{
+	"name": "plg_system_onuserghsvs",
+	"nameReal": "plg_system_onuserghsvs",
+	"filename": "onuserghsvs",
+	"version": "2021.12.04",
+	"versionCompare": "2021.12.04",
+	"update": {
+		"type": "plugin",
+		"folder": "system",
+		"client": "site",
+		"tag": "stable",
+		"targetplatform": [
+			"3.*"
+		]
+	},
+	"releaseTxt": {
+		"title": "Joomla system plugin OnUserGhsvs"
+	},
+	"changelog": {
+		"projecturl": "https://github.com/GHSVS-de/plg_system_onuserghsvs",
+		"infosDE": "",
+		"infosEN": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
+		"docsDE": "",
+		"docsEN": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
+		"lastTests": [
+			"PHP 8",
+			"Joomla 3.10",
+			"Vivaldi",
+			"Firefox"
+		]
+	},
+	"minimumPhp": "7.3.0",
+	"maximumPhp": "8.9999.9999",
+	"minimumJoomla": "3.10.0",
+	"maximumJoomla": "3.9999.9999",
+	"allowDowngrades": "1",
+	"creationDate": "2021-12-04",
+	"licenseLong": "GNU General Public License version 3 or later; see LICENSE.txt.",
+	"copyright": "(C) 2021, G@HService Berlin Neukölln, Volkmar Volli Schlothauer.",
+	"author": {
+		"name": "G@HService Berlin Neukölln, Volkmar Volli Schlothauer",
+		"email": "",
+		"url": "https://www.ghsvs.de"
+	},
+	"contributors": [
+		{
+			"name": "G@HService Berlin Neukölln, Volkmar Volli Schlothauer",
+			"email": "",
+			"url": "https://www.ghsvs.de"
+		}
+	],
+	"bugs": "https://github.com/GHSVS-de/plg_system_onuserghsvs/issues",
+	"homepage": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
+	"keywords": [
+		"joomla",
+		"system plugin",
+		"user events"
+	],
+	"private": false,
+	"description": "Joomla system plugin. Performs additional actions when users are edited or saved.",
+	"license": "GPL-3.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/GHSVS-de/plg_system_onuserghsvs.git"
+	},
+	"scripts": {
+		"g-build": "node build.js",
+		"g-npm-update-check": "ncu",
+		"g-ncu-override-json": "ncu -u"
+	},
+	"devDependencies": {
+		"adm-zip": "0.5.9",
+		"fs-extra": "10.0.0",
+		"npm-check-updates": "^12.0.2",
+		"picocolors": "^1.0.0",
+		"rimraf": "3.0.2"
+	},
+	"peerDependencies": {},
+	"browserslist": []
+}
