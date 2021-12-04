@@ -1,5 +1,5 @@
-# plg_system_customcssghsvs
-- Joomla system plugin. Additionals on user events.
+# plg_system_onuserghsvs
+- Joomla system plugin. Performs additional actions when users are edited or saved.
 
 ## Restrictions
 - Just one action at the moment: Send information email to admin that has created a new user in Joomla backend.
