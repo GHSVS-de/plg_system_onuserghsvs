@@ -5,7 +5,7 @@
 Checksum entities: `{{checksumEntity}}`
 
 - {{description}}
-- Joomla-Target-Platform: {{targetplatform}}
+- Joomla-Target-Platform: {{targetplatformHtml}}
 - [Download {{zipFilename}}](https://github.com/GHSVS-de/{{name}}/raw/{{version}}/dist/{{zipFilename}})
 - [Compare releases {{versionCompare}}...{{version}}](https://github.com/GHSVS-de/{{name}}/compare/{{versionCompare}}...{{version}})
 - [Changelogs](https://updates.ghsvs.de/changelog.php?file={{name}})

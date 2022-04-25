@@ -9,10 +9,6 @@
 	<version>{{version}}</version>
 	<description>{{nameUpper}}_XML_DESCRIPTION</description>
 
-	<versionHistory>
-		https://updates.ghsvs.de/changelog.php?file={{name}}
-	</versionHistory>
-
 	<updateservers><server type="extension" priority="1" name="{{nameUpper}}">https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/{{name}}-update.xml</server></updateservers>
 
 	<changelogurl>https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/{{name}}-changelog.xml</changelogurl>
@@ -45,7 +41,7 @@
 		<fields name="params">
 
 			<fieldset name="basic">
-				<field type="hidden" default="1" name="{{filename}}plugin" />
+				<field type="hidden" default="1" name="{{filename}}plugin"/>
 
 				<field name="informAdminsSpacer" type="note"
 					class="alert alert-info"

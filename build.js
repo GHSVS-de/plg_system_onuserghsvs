@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 
 const fse = require('fs-extra');
-// const chalk = require('chalk');
-// import chalk from "chalk"
 const pc = require('picocolors');
 const replaceXml = require('./build/replaceXml.js');
 const helper = require('./build/helper.js');
