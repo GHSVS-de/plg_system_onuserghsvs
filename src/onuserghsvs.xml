@@ -48,7 +48,7 @@
 					label="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS"
 					description="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS_DESC"/>
 
-				<field name="informAdmins" type="list" default="1" filter="integer"
+				<field name="informAdmins" type="list" default="0" filter="integer"
 					label="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>
@@ -64,6 +64,26 @@
 					label="PLG_SYSTEM_ONUSERGHSVS_SPECIFICEMAILS"
 					showon="informAdmins:1"/>
 
+				<field name="filterNameOnSaveSpacer" type="note"
+					class="alert alert-info"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_DESC"/>
+
+				<field name="filterNameOnSave" type="list" default="0" filter="integer"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="filterNameOnSaveRulesSpacer" type="note"
+					class="alert alert-info"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_DESC"
+					showon="filterNameOnSave:1"/>
+
+				<field name="filterNameOnSaveRules" type="textarea" default="" filter="string"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					showon="filterNameOnSave:1"/>
 			</fieldset>
 		</fields>
 	</config>

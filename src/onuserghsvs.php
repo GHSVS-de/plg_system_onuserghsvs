@@ -140,8 +140,46 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	{
 	}
 
-	public function onUserBeforeSave($user, $isnew, $new)
+	public function onUserBeforeSave($oldUser, $isnew, $newUser)
 	{
+		if (
+			!$isnew
+			|| !$this->app->isClient('site')
+			|| !$this->params->get('filterNameOnSave', 0) === 1
+		){
+			return;
+		}
+
+		$rules = trim($this->params->get('filterNameOnSaveRules', ''));
+
+		if ($rules === '')
+		{
+			return;
+		}
+
+		$replaceWhat = [
+			"\n\r",
+			"\r\n",
+			"\r",
+		];
+		$rules = str_replace($replaceWhat, "\n", $rules);
+		$rules = array_map('trim', explode("\n", $rules));
+
+		foreach ($rules as $value)
+		{
+			if (!$value)
+			{
+				continue;
+			}
+
+			if (mb_stripos($newUser['name'], $value) !== false)
+			{
+				$this->app->enqueueMessage(
+					Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_MESSAGE'), 'error');
+
+				return false;
+			}
+		}
 	}
 
 	public function onUserLoginFailure($response)
