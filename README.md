@@ -1,8 +1,10 @@
 # plg_system_onuserghsvs
-- Joomla system plugin. Performs additional actions when users are edited or saved.
+Joomla system plugin. Performs additional actions when users are edited or saved.
 
 ## Restrictions
-- Just one action at the moment: Send information email to admin that has created a new user in Joomla backend.
+- Just two actions at the moment:
+  - Send information email to `Super User`s when a new user in Joomla backend has been created.
+  - Simple check for forbidden characters in `Name` field on registration and block registration if present.
 - Just english language files that also contain german translations (lazyness).
 
 ----------------------
@@ -12,8 +14,8 @@
 - `cd /mnt/z/git-kram/plg_system_onuserghsvs`
 
 ## node/npm updates/installation
-- `npm run g-npm-update-check` or (faster) `ncu`
-- `npm run g-ncu-override-json` (if needed) or (faster) `ncu -u`
+- `npm run updateCheck` or (faster) `npm outdated`
+- `npm run update` (if needed) or (faster) `npm update --save-dev`
 - `npm install` (if needed)
 
 ## Build installable ZIP package
