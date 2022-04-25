@@ -64,3 +64,12 @@ module.exports.findVersionSub = async (packagesFile, packageName) =>
 
 	return foundVersion;
 }
+
+// Simple. Find version string in file package.json
+module.exports.findVersionSubSimple = async (packagesFile, packageName) =>
+{
+	console.log(pc.magenta(pc.bold(
+	`Search versionSub of package "${packageName}" in "${packagesFile}".`)));
+
+	return require(packagesFile).version;
+}
