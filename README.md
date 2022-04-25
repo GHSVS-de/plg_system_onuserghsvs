@@ -4,7 +4,7 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 ## Restrictions
 - Just two actions at the moment:
   - Send information email to `Super User`s when a new user in Joomla backend has been created.
-  - Simple check for forbidden characters in `Name` field on registration and block registration if present.
+  - Simple check for forbidden characters in `Name` field on registration and block registration if present. Ahow a message. Only server-side check.
 - Just english language files that also contain german translations (lazyness).
 
 ----------------------
