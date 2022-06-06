@@ -42,63 +42,15 @@
 		<fields name="params">
 
 			<fieldset name="basic">
-
 				<field type="hidden" default="1" name="{{filename}}plugin"/>
-
-
-
-
-				<field name="filterNameOnSaveSpacer" type="note"
-					class="alert alert-info"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE"
-					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_DESC"/>
-
-				<field name="filterNameOnSave" type="list" default="0" filter="integer"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="filterNameOnSaveRulesSpacer" type="note"
-					class="alert alert-info"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
-					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_DESC"
-					showon="filterNameOnSave:1"/>
-
-				<field name="filterNameOnSaveRules" type="textarea" default="" filter="string"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
-					showon="filterNameOnSave:1"/>
-
-				<field name="users_to_block" type="UsersGhsvs" multiple="true"
-					label="PLG_ONUSERGHSVS_USERS_TO_BLOCK">
-				</field>
-
-				<field name="block_fe" type="list" filter="integer"
-					label="PLG_ONUSERGHSVS_BLOCK_FE">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-
-				<field name="block_be" type="list" filter="integer"
-					label="PLG_ONUSERGHSVS_BLOCK_BE">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-
-				<field name="allow_admins" type="list" filter="integer"
-					label="PLG_ONUSERGHSVS_ALLOW_ADMINS">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
-
 			</fieldset>
 
+			<fieldset name="onRegister"
+				label="PLG_ONUSERGHSVS_FIELDSET_ONREGISTER">
 
-			<fieldset name="superUserEmail"
-				label="PLG_ONUSERGHSVS_FIELDSET_SUPERUSEREMAIL">
-
+				<!--####Register. Info email-->
 				<field name="informAdminsSpacer" type="note"
-					class="alert alert-info"
+					class="alert alert-warning"
 					label="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS"
 					description="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS_DESC"/>
 
@@ -108,7 +60,13 @@
 					<option value="0">JNO</option>
 				</field>
 
-				<field name="specificEmailsSpacer" type="note"
+				<field name="infoSpacer" type="note" close="true"
+					class="alert alert-secondary"
+					label="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS_INFO"
+					description="PLG_SYSTEM_ONUSERGHSVS_INFORMADMINS_INFO_DESC"
+					showon="informAdmins:1"/>
+
+				<field name="specificEmailsSpacer" type="note" close="true"
 					class="alert alert-info"
 					label="PLG_SYSTEM_ONUSERGHSVS_SPECIFICEMAILS"
 					description="PLG_SYSTEM_ONUSERGHSVS_SPECIFICEMAILS_DESC"
@@ -117,8 +75,88 @@
 				<field name="specificEmails" type="text" default="" filter="string"
 					label="PLG_SYSTEM_ONUSERGHSVS_SPECIFICEMAILS"
 					showon="informAdmins:1"/>
+				<!--/####Register. Info email-->
 
-			</fieldset><!--/superUserEmail-->
+				<!--####Register. Name filter-->
+				<field name="filterNameOnSaveSpacer" type="note"
+					class="alert alert-warning"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_DESC"/>
+
+				<field name="filterNameOnSave" type="list" default="0" filter="integer"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="blockUserSavingInfoSpacer" type="note" close="true"
+					class="alert alert-secondary"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_INFO"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_INFO_DESC"
+					showon="filterNameOnSave:1"/>
+
+				<field name="filterNameOnSaveRulesSpacer" type="note" close="true"
+					class="alert alert-info"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_DESC"
+					showon="filterNameOnSave:1"/>
+
+				<field name="filterNameOnSaveRules" type="textarea" default="" filter="string"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					showon="filterNameOnSave:1"/>
+				<!--/####Register. Name filter-->
+
+			</fieldset><!--/onRegister-->
+
+			<fieldset name="onProfile"
+				label="PLG_ONUSERGHSVS_FIELDSET_ONPROFILE">
+
+				<!--####Profile. Block user saving-->
+				<field name="blockUserSavingSpacer" type="note"
+					class="alert alert-warning"
+					label="PLG_ONUSERGHSVS_BLOCKUSERSAVING"
+					description="PLG_ONUSERGHSVS_BLOCKUSERSAVING_DESC"/>
+
+				<field name="blockUserSaving" type="list" default="0" filter="integer"
+					label="PLG_ONUSERGHSVS_BLOCKUSERSAVING">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="blockUserSavingInfoSpacer" type="note" close="true"
+					class="alert alert-secondary"
+					label="PLG_ONUSERGHSVS_BLOCKUSERSAVING_INFO"
+					description="PLG_ONUSERGHSVS_BLOCKUSERSAVING_INFO_DESC"
+					showon="blockUserSaving:1"/>
+
+				<field name="users_to_block" type="UsersGhsvs" multiple="true"
+					label="PLG_ONUSERGHSVS_USERS_TO_BLOCK"
+					showon="blockUserSaving:1">
+				</field>
+
+				<field name="block_fe" type="list" filter="integer" default="1"
+					label="PLG_ONUSERGHSVS_BLOCK_FE"
+					showon="blockUserSaving:1">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="block_be" type="list" filter="integer" default="0"
+					label="PLG_ONUSERGHSVS_BLOCK_BE"
+					showon="blockUserSaving:1">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="allow_admins" type="list" filter="integer" default="1"
+					label="PLG_ONUSERGHSVS_ALLOW_ADMINS"
+					showon="blockUserSaving:1">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<!--/####Profile. Block user saving-->
+
+			</fieldset><!--/onProfile-->
 		</fields>
 	</config>
 
