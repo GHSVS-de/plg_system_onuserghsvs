@@ -35,13 +35,67 @@
 		<filename>installerScript.php</filename>
 		<filename>LICENSE.txt</filename>
 		<folder>language</folder>
+		<folder>src</folder>
 	</files>
 	{{namespace}}
-	<config>
+	<config addfieldpath="plugins/system/{{filename}}/Field"{{addfieldprefix}}>
 		<fields name="params">
 
 			<fieldset name="basic">
+
 				<field type="hidden" default="1" name="{{filename}}plugin"/>
+
+
+
+
+				<field name="filterNameOnSaveSpacer" type="note"
+					class="alert alert-info"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_DESC"/>
+
+				<field name="filterNameOnSave" type="list" default="0" filter="integer"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="filterNameOnSaveRulesSpacer" type="note"
+					class="alert alert-info"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_DESC"
+					showon="filterNameOnSave:1"/>
+
+				<field name="filterNameOnSaveRules" type="textarea" default="" filter="string"
+					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
+					showon="filterNameOnSave:1"/>
+
+				<field name="users_to_block" type="UsersGhsvs" multiple="true"
+					label="PLG_ONUSERGHSVS_USERS_TO_BLOCK">
+				</field>
+
+				<field name="block_fe" type="list" filter="integer"
+					label="PLG_ONUSERGHSVS_BLOCK_FE">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="block_be" type="list" filter="integer"
+					label="PLG_ONUSERGHSVS_BLOCK_BE">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+				<field name="allow_admins" type="list" filter="integer"
+					label="PLG_ONUSERGHSVS_ALLOW_ADMINS">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+
+			</fieldset>
+
+
+			<fieldset name="superUserEmail"
+				label="PLG_ONUSERGHSVS_FIELDSET_SUPERUSEREMAIL">
 
 				<field name="informAdminsSpacer" type="note"
 					class="alert alert-info"
@@ -64,27 +118,7 @@
 					label="PLG_SYSTEM_ONUSERGHSVS_SPECIFICEMAILS"
 					showon="informAdmins:1"/>
 
-				<field name="filterNameOnSaveSpacer" type="note"
-					class="alert alert-info"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE"
-					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_DESC"/>
-
-				<field name="filterNameOnSave" type="list" default="0" filter="integer"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE">
-					<option value="1">JYES</option>
-					<option value="0">JNO</option>
-				</field>
-
-				<field name="filterNameOnSaveRulesSpacer" type="note"
-					class="alert alert-info"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
-					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_DESC"
-					showon="filterNameOnSave:1"/>
-
-				<field name="filterNameOnSaveRules" type="textarea" default="" filter="string"
-					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES"
-					showon="filterNameOnSave:1"/>
-			</fieldset>
+			</fieldset><!--/superUserEmail-->
 		</fields>
 	</config>
 
