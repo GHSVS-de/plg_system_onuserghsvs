@@ -89,7 +89,7 @@
 					<option value="0">JNO</option>
 				</field>
 
-				<field name="blockUserSavingInfoSpacer" type="note" close="true"
+				<field name="filterNameOnSaveInfoSpacer" type="note" close="true"
 					class="alert alert-secondary"
 					label="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_INFO"
 					description="PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_INFO_DESC"

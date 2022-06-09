@@ -56,7 +56,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	 * Method is called after user data is stored in the database.
 	 *
 	 * @param   array    $user     Holds the new user data.
-	 * @param   boolean  $isnew    True if a new user is stored.
+	 * @param   boolean  $isNew    True if a new user is stored.
 	 * @param   boolean  $success  True if user was successfully stored in the database.
 	 * @param   string   $msg      Message.
 	 *
@@ -64,16 +64,16 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	 *
 	 * @since   1.6
 	 */
-	public function onUserAfterSave($user, $isnew, $success, $msg): void
+	public function onUserAfterSave($user, $isNew, $success, $msg): void
 	{
 		// If the user wasn't stored.
-		if (!$success)
+		if (!$success || $this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
 
 		if (
-			!$isnew
+			!$isNew
 			|| !$this->app->isClient('administrator')
 			|| $this->params->get('informAdmins', 1) === 0
 		) {
@@ -98,10 +98,6 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		{
 			return;
 		}
-
-		// Set up the email subject and body
-		//$lang = Factory::getLanguage();
-		//$lang->load('plg_user_joomla', JPATH_ADMINISTRATOR);
 
 		$mailFrom = $this->app->get('mailfrom');
 		$fromName = $this->app->get('fromname');
@@ -144,46 +140,91 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	{
 	}
 
-	public function onUserBeforeSave($oldUser, $isnew, $newUser)
+	public function onUserBeforeSave($oldUser, $isNew, $newUser)
 	{
-		if (
-			!$isnew
-			|| !$this->app->isClient('site')
-			|| !$this->params->get('filterNameOnSave', 0) === 1
-		) {
-			return;
-		}
-
-		$rules = trim($this->params->get('filterNameOnSaveRules', ''));
-
-		if ($rules === '')
+		if ($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
 
-		$replaceWhat = [
+		if (
+			$isNew && $this->app->isClient('site')
+			&& ($this->params->get('filterNameOnSave', 0) === 1)
+		) {
+			$rules = trim($this->params->get('filterNameOnSaveRules', ''));
+
+			if ($rules === '')
+			{
+				return;
+			}
+
+			$replaceWhat = [
 			"\n\r",
 			"\r\n",
 			"\r",
 		];
-		$rules = str_replace($replaceWhat, "\n", $rules);
-		$rules = array_map('trim', explode("\n", $rules));
+			$rules = str_replace($replaceWhat, "\n", $rules);
+			$rules = array_map('trim', explode("\n", $rules));
 
-		foreach ($rules as $value)
-		{
-			if (!$value)
+			foreach ($rules as $value)
 			{
-				continue;
+				if (!$value)
+				{
+					continue;
+				}
+
+				if (mb_stripos($newUser['name'], $value) !== false)
+				{
+					$this->app->enqueueMessage(
+						Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_MESSAGE'),
+						'danger'
+					);
+
+					return false;
+				}
 			}
+		}
 
-			if (mb_stripos($newUser['name'], $value) !== false)
+		if (!$isNew && $this->params->get('blockUserSaving', 0) === 1)
+		{
+			$blockedUsers = $this->params->get('users_to_block', [], 'array');
+
+			if (in_array($oldUser['id'], $blockedUsers))
 			{
-				$this->app->enqueueMessage(
-					Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_MESSAGE'),
-					'error'
-				);
+				$feBlock = $this->app->isClient('site')
+					&& $this->params->get('block_fe', 0) === 1;
+				$beBlock = $this->app->isClient('administrator')
+					&& $this->params->get('block_be', 0) === 1;
 
-				return false;
+				if (version_compare(JVERSION, '4', 'lt'))
+				{
+					$isSuperAdmin = Factory::getUser()->authorise(
+						'core.admin',
+						'com_users'
+					);
+				}
+				else
+				{
+					$isSuperAdmin = $this->app->getIdentity()->authorise(
+						'core.admin',
+						'com_users'
+					);
+				}
+
+				if ($feBlock || $beBlock)
+				{
+					if (
+						!$isSuperAdmin
+						|| ($isSuperAdmin && $this->params->get('allow_admins', 0) !== 1)
+					) {
+						$this->app->enqueueMessage(
+							Text::_('PLG_ONUSERGHSVS_BLOCKUSERSAVING_MESSAGE'),
+							'danger'
+						);
+
+						return false;
+					}
+				}
 			}
 		}
 	}
@@ -211,8 +252,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	 */
 	private function getSuperUsers($email = null)
 	{
-		// Get a reference to the database object
-		$db = Factory::getDbo();
+		$db = $this->db;
 
 		// Convert the email list to an array
 		if (!empty($email))
