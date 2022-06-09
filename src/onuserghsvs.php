@@ -1,12 +1,12 @@
 <?php
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
-//use Joomla\CMS\Table\Table;
-//use Joomla\CMS\Access\Access;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Uri\Uri;
 
 class PlgSystemOnUserGhsvs extends CMSPlugin
 {
@@ -76,7 +76,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 			!$isnew
 			|| !$this->app->isClient('administrator')
 			|| $this->params->get('informAdmins', 1) === 0
-		){
+		) {
 			return;
 		}
 
@@ -107,11 +107,15 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		$fromName = $this->app->get('fromname');
 
 		// Compute the mail subject.
-		$emailSubject = Text::sprintf('PLG_SYSTEM_ONUSERGHSVS_NEW_USER_EMAIL_SUBJECT',
-			$user['name'], Uri::root());
+		$emailSubject = Text::sprintf(
+			'PLG_SYSTEM_ONUSERGHSVS_NEW_USER_EMAIL_SUBJECT',
+			$user['name'],
+			Uri::root()
+		);
 
 		// Compute the mail body.
-		$emailBody = Text::sprintf('PLG_SYSTEM_ONUSERGHSVS_NEW_USER_EMAIL_BODY',
+		$emailBody = Text::sprintf(
+			'PLG_SYSTEM_ONUSERGHSVS_NEW_USER_EMAIL_BODY',
 			Uri::root(),
 			$this->app->get('sitename'),
 			$user['name'],
@@ -146,7 +150,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 			!$isnew
 			|| !$this->app->isClient('site')
 			|| !$this->params->get('filterNameOnSave', 0) === 1
-		){
+		) {
 			return;
 		}
 
@@ -175,7 +179,9 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 			if (mb_stripos($newUser['name'], $value) !== false)
 			{
 				$this->app->enqueueMessage(
-					Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_MESSAGE'), 'error');
+					Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVERULES_MESSAGE'),
+					'error'
+				);
 
 				return false;
 			}
@@ -186,7 +192,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	{
 	}
 
-	public function onUserLogout($user, $options = array())
+	public function onUserLogout($user, $options = [])
 	{
 	}
 
@@ -212,7 +218,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		if (!empty($email))
 		{
 			$temp   = explode(',', $email);
-			$emails = array();
+			$emails = [];
 
 			foreach ($temp as $entry)
 			{
@@ -224,18 +230,18 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		}
 		else
 		{
-			$emails = array();
+			$emails = [];
 		}
 
 		// Get a list of groups which have Super User privileges
-		$ret = array();
+		$ret = [];
 
 		try
 		{
-			$rootId    = JTable::getInstance('Asset', 'JTable')->getRootId();
-			$rules     = JAccess::getAssetRules($rootId)->getData();
+			$rootId    = Table::getInstance('Asset', 'JTable')->getRootId();
+			$rules     = Access::getAssetRules($rootId)->getData();
 			$rawGroups = $rules['core.admin']->getData();
-			$groups    = array();
+			$groups    = [];
 
 			if (empty($rawGroups))
 			{
@@ -264,9 +270,9 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		try
 		{
 			$query = $db->getQuery(true)
-						->select($db->qn('user_id'))
-						->from($db->qn('#__user_usergroup_map'))
-						->where($db->qn('group_id') . ' IN(' . implode(',', $groups) . ')');
+				->select($db->qn('user_id'))
+				->from($db->qn('#__user_usergroup_map'))
+				->where($db->qn('group_id') . ' IN(' . implode(',', $groups) . ')');
 			$db->setQuery($query);
 			$rawUserIDs = $db->loadColumn(0);
 
@@ -275,7 +281,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 				return $ret;
 			}
 
-			$userIDs = array();
+			$userIDs = [];
 
 			foreach ($rawUserIDs as $id)
 			{
@@ -291,16 +297,16 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 		try
 		{
 			$query = $db->getQuery(true)
-						->select(
-							array(
-								$db->qn('id'),
-								$db->qn('username'),
-								$db->qn('email'),
-							)
-						)->from($db->qn('#__users'))
-						->where($db->qn('id') . ' IN(' . implode(',', $userIDs) . ')')
-						->where($db->qn('block') . ' = 0')
-						->where($db->qn('sendEmail') . ' = ' . $db->q('1'));
+				->select(
+					[
+						$db->qn('id'),
+						$db->qn('username'),
+						$db->qn('email'),
+					]
+				)->from($db->qn('#__users'))
+				->where($db->qn('id') . ' IN(' . implode(',', $userIDs) . ')')
+				->where($db->qn('block') . ' = 0')
+				->where($db->qn('sendEmail') . ' = ' . $db->q('1'));
 
 			if (!empty($emails))
 			{

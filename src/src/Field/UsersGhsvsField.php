@@ -1,16 +1,18 @@
 <?php
+
 namespace Joomla\Plugin\System\OnUserGhsvs\Field;
 
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Field\ListField;
-use Joomla\CMS\Form\FormField;
 
 class UsersGhsvsField extends ListField
 {
 	public $type = 'UsersGhsvs';
+
 	protected static $options = [];
+
 	protected $layout;
 
 	protected function getOptions()
@@ -55,7 +57,7 @@ class UsersGhsvsField extends ListField
 			{
 				foreach ($options as $option)
 				{
-					$option->text .= ' (' . $option->username .')';
+					$option->text .= ' (' . $option->username . ')';
 				}
 
 				static::$options[$hash] = array_merge(static::$options[$hash], $options);
@@ -69,7 +71,6 @@ class UsersGhsvsField extends ListField
 	{
 		if (version_compare(JVERSION, '4', 'lt'))
 		{
-
 		}
 		else
 		{

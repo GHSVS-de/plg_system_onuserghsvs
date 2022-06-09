@@ -21,6 +21,13 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 - `npm run update` (if needed) or (faster) `npm update --save-dev`
 - `npm install` (if needed)
 
+## PHP Codestyle
+If you think it's worth it.
+- `cd /mnt/z/git-kram/php-cs-fixer-ghsvs`
+- `npm run plg_system_onuserghsvsDry` (= dry test run).
+- `npm run plg_system_onuserghsvs` (= cleans code).
+- `cd /mnt/z/git-kram/plg_system_onuserghsvs` (back to this repo).
+
 ## Build installable ZIP package
 - `node build.js`
 - New, installable ZIP is in `./dist` afterwards.
