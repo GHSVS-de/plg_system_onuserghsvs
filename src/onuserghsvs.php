@@ -147,6 +147,8 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 			return;
 		}
 
+		$isJ3 = version_compare(JVERSION, '4', 'lt');
+
 		if (
 			$isNew && $this->app->isClient('site')
 			&& ($this->params->get('filterNameOnSave', 0) === 1)
@@ -159,10 +161,10 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 			}
 
 			$replaceWhat = [
-			"\n\r",
-			"\r\n",
-			"\r",
-		];
+				"\n\r",
+				"\r\n",
+				"\r",
+			];
 			$rules = str_replace($replaceWhat, "\n", $rules);
 			$rules = array_map('trim', explode("\n", $rules));
 
@@ -177,7 +179,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 				{
 					$this->app->enqueueMessage(
 						Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_MESSAGE'),
-						'danger'
+						$isJ3 ? 'error' : 'danger'
 					);
 
 					return false;
@@ -196,34 +198,36 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 				$beBlock = $this->app->isClient('administrator')
 					&& $this->params->get('block_be', 0) === 1;
 
-				if (version_compare(JVERSION, '4', 'lt'))
-				{
-					$isSuperAdmin = Factory::getUser()->authorise(
-						'core.admin',
-						'com_users'
-					);
-				}
-				else
-				{
-					$isSuperAdmin = $this->app->getIdentity()->authorise(
-						'core.admin',
-						'com_users'
-					);
-				}
+				// -1:only super users, 1:authorized admins
+				$allow_admins = $this->params->get('allow_admins', -1);
+				$isAuthorized = 0;
 
-				if ($feBlock || $beBlock)
+				if ($allow_admins !== 0)
 				{
-					if (
-						!$isSuperAdmin
-						|| ($isSuperAdmin && $this->params->get('allow_admins', 0) !== 1)
-					) {
-						$this->app->enqueueMessage(
-							Text::_('PLG_ONUSERGHSVS_BLOCKUSERSAVING_MESSAGE'),
-							'danger'
+					if ($isJ3)
+					{
+						$isAuthorized = Factory::getUser()->authorise(
+							'core.admin',
+							$allow_admins > 0 ? 'com_users' : null
 						);
-
-						return false;
 					}
+					else
+					{
+						$isAuthorized = $this->app->getIdentity()->authorise(
+							'core.admin',
+							$allow_admins > 0 ? 'com_users' : null
+						);
+					}
+				}
+
+				if (($feBlock || $beBlock) && !$isAuthorized)
+				{
+					$this->app->enqueueMessage(
+						Text::_('PLG_ONUSERGHSVS_BLOCKUSERSAVING_MESSAGE'),
+						$isJ3 ? 'error' : 'danger'
+					);
+
+					return false;
 				}
 			}
 		}
