@@ -2,7 +2,7 @@
 	"name": "plg_system_onuserghsvs",
 	"nameReal": "plg_system_onuserghsvs",
 	"filename": "onuserghsvs",
-	"version": "2022.06.05-dev",
+	"version": "2022.06.11",
 	"versionCompare": "2022.04.25",
 	"update": {
 		"type": "plugin",
@@ -42,13 +42,11 @@
 	"copyright": "(C) 2021, G@HService Berlin Neukölln, Volkmar Volli Schlothauer.",
 	"author": {
 		"name": "G@HService Berlin Neukölln, Volkmar Volli Schlothauer",
-		"email": "",
 		"url": "https://ghsvs.de"
 	},
 	"contributors": [
 		{
 			"name": "G@HService Berlin Neukölln, Volkmar Volli Schlothauer",
-			"email": "",
 			"url": "https://ghsvs.de"
 		}
 	],
