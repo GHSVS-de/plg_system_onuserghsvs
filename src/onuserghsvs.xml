@@ -38,7 +38,7 @@
 		<folder>src</folder>
 	</files>
 	{{namespace}}
-	<config addfieldpath="plugins/system/{{filename}}/Field"{{addfieldprefix}}>
+	<config addfieldpath="plugins/system/{{filename}}/src/Field/j3"{{addfieldprefix}}>
 		<fields name="params">
 
 			<fieldset name="basic">
