@@ -1,11 +1,14 @@
 # plg_system_onuserghsvs
 Joomla system plugin. Performs additional actions when users are edited or saved.
 
-## Restrictions
-- Just two actions at the moment:
-  - Send information email to `Super User`s when a new user in Joomla backend has been created.
-  - Simple check for forbidden characters in `Name` field on registration and block registration if present. Show a message. Only server-side check.
-- Just english language files that also contain german translations (lazyness).
+## Features
+1. When a new user is created in the (!)backend(!), inform Super-Users by email? Including the login details of the new user.
+2. The field `Name` is checked for prohibited characters or character strings during registration in the frontend. There is only a simple filtering on the code side. A distinction is NOT made between upper and lower case letters. If the name contains forbidden characters (strings), the registration is aborted with an error message.
+3. Selected users are not allowed to change their user data when editing their profile. An error message is displayed to the user.
+
+## Languages
+- de-DE
+- en-GB
 
 ----------------------
 
