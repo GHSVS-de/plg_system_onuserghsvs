@@ -148,11 +148,18 @@
 					<option value="1">JYES</option>
 				</field>
 
-				<field name="allow_admins" type="list" filter="integer" default="1"
+				<field name="allow_adminsSpacer" type="note" close="true"
+					class="alert alert-secondary"
+					label="PLG_ONUSERGHSVS_ALLOW_ADMINS"
+					description="PLG_ONUSERGHSVS_ALLOW_ADMINS_DESC"
+					showon="blockUserSaving:1"/>
+
+				<field name="allow_admins" type="list" filter="integer" default="-1"
 					label="PLG_ONUSERGHSVS_ALLOW_ADMINS"
 					showon="blockUserSaving:1">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
+					<option value="-1">PLG_ONUSERGHSVS_ONLY_SUPERUSERS</option>
 				</field>
 				<!--/####Profile. Block user saving-->
 
