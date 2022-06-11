@@ -14,7 +14,7 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 
 # My personal build procedure (WSL 1, Debian, Win 10)
 
-**!!Uses build scripts of repo `buildKramGhsvs`!!**
+**@since v2022.06.11: Build procedure uses local repo fork of https://github.com/GHSVS-de/buildKramGhsvs**
 
 - Prepare/adapt `./package.json`.
 - `cd /mnt/z/git-kram/plg_system_onuserghsvs`
