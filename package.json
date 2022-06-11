@@ -18,7 +18,11 @@
 	"releaseTxt": {
 		"title": "Joomla system plugin OnUserGhsvs",
 		"requires": [],
-		"uses": []
+		"uses": [],
+		"language": [
+			"de-DE",
+			"en-GB"
+		]
 	},
 	"changelog": {
 		"projecturl": "https://github.com/GHSVS-de/plg_system_onuserghsvs",
