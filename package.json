@@ -70,7 +70,6 @@
 		"update": "npm update --save-dev"
 	},
 	"devDependencies": {
-		"adm-zip": "^0.5.9",
 		"fs-extra": "^10.1.0",
 		"picocolors": "^1.0.0"
 	},
