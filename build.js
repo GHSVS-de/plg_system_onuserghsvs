@@ -34,8 +34,8 @@ let to = "";
 		`./package`,
 		`./dist`,
 	];
-
 	await helper.cleanOut(cleanOuts);
+
 	console.log(pc.cyan(pc.bold(`Be patient! Some copy actions!`)));
 
 	await fse.copy("./src", "./package"
