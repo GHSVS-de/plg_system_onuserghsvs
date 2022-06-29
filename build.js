@@ -38,18 +38,11 @@ let to = "";
 
 	console.log(pc.cyan(pc.bold(`Be patient! Some copy actions!`)));
 
-	await fse.copy("./src", "./package"
-	).then(
-		answer => console.log(pc.yellow(pc.bold((`Copied "./src" to "./package".`))))
-	);
+	from = './src'
+	to = './package'
+	await helper.copy(from, to)
 
-	if (!(await fse.exists("./dist")))
-	{
-		await fse.mkdir("./dist"
-		).then(
-			answer => console.log(pc.yellow(pc.bold((`Created "./dist".`))))
-		);
-  }
+	await helper.mkdir('./dist');
 
 	const zipFilename = `${name}-${version}.zip`;
 
