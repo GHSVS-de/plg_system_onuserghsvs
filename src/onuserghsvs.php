@@ -7,6 +7,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Component\ComponentHelper;
 
 class PlgSystemOnUserGhsvs extends CMSPlugin
 {
@@ -33,6 +35,27 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	 * @since  3.6.3
 	 */
 	protected $autoloadLanguage = true;
+
+	public function onContentPrepareForm(Form $form, $data)
+	{
+		if (!$this->app->isClient('administrator'))
+		{
+			return;
+		}
+
+		$extension = 'com_users';
+
+		if (
+			$this->params->get('passwordMinimumLength', 0) === 1
+			&& $this->app->input->get('option', '') === 'com_config'
+			&& ($this->app->input->get('view', '') === 'component' || $this->app->input->get('controller', '') === 'component')
+			&& $this->app->input->get('component', '') === $extension
+		) {
+			$min = (int) $this->params->get('minimum_length', 5);
+			$group = null;
+			$form->setFieldAttribute('minimum_length', 'min', $min, $group);
+		}
+	}
 
 	public function onUserAfterDelete($user, $success, $msg): void
 	{

@@ -11,17 +11,11 @@
 
 	<updateservers><server type="extension" priority="1" name="{{nameUpper}}">https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/{{name}}-update.xml</server></updateservers>
 
-	<changelogurl>https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/{{name}}-changelog.xml</changelogurl>
-
 	<infourl>https://github.com/GHSVS-de/{{name}}#readme</infourl>
 
 	<downloadUrl>
 	https://github.com/GHSVS-de/{{name}}/raw/{{version}}/dist/{{zipFilename}}
 	</downloadUrl>
-
-	<versionCompare>
-	https://github.com/GHSVS-de/{{name}}/compare/{{versionCompare}}...{{version}}
-	</versionCompare>
 
 	<scriptfile>installerScript.php</scriptfile>
 	<minimumPhp>{{minimumPhp}}</minimumPhp>
@@ -47,6 +41,27 @@
 
 			<fieldset name="onRegister"
 				label="PLG_ONUSERGHSVS_FIELDSET_ONREGISTER">
+				<!--####Register. passwordMinimumLength-->
+				<field name="passwordMinimumLengthSpacer" type="note"
+					class="alert alert-warning"
+					label="PLG_SYSTEM_ONUSERGHSVS_PASSWORDMINIMUMLENGTH"
+					description="PLG_SYSTEM_ONUSERGHSVS_PASSWORDMINIMUMLENGTH_DESC"/>
+
+				<field name="passwordMinimumLength" type="list" default="0" filter="integer"
+					label="PLG_SYSTEM_ONUSERGHSVS_PASSWORDMINIMUMLENGTH">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="minimum_length" type="number"
+					label="PLG_SYSTEM_ONUSERGHSVS_PASSWORDMINIMUMLENGTH_LBL"
+					filter="integer"
+					min="1"
+					step="1"
+					default="5"
+					validate="number"
+					showon="passwordMinimumLength:1"/>
+
 
 				<!--####Register. Info email-->
 				<field name="informAdminsSpacer" type="note"
