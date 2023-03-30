@@ -2,17 +2,15 @@
 const path = require('path');
 
 /* Configure START */
-const pathBuildKram = path.resolve("../buildKramGhsvs/build");
-const updateXml = `${pathBuildKram}/update.xml`;
-const changelogXml = `${pathBuildKram}/changelog.xml`;
-const releaseTxt = `${pathBuildKram}/release.txt`;
+const pathBuildKram = path.resolve("../buildKramGhsvs");
+const updateXml = `${pathBuildKram}/build/update_no-changelog.xml`;
+// const changelogXml = `${pathBuildKram}/changelog.xml`;
+const releaseTxt = `${pathBuildKram}/build/release_no-changelog.txt`;
 /* Configure END */
 
-const replaceXml = require(`${pathBuildKram}/replaceXml.js`);
-const helper = require(`${pathBuildKram}/helper.js`);
-
-const fse = require('fs-extra');
-const pc = require('picocolors');
+const replaceXml = require(`${pathBuildKram}/build/replaceXml.js`);
+const helper = require(`${pathBuildKram}/build/helper.js`);
+const pc = require(`${pathBuildKram}/node_modules/picocolors`);
 
 const {
 	name,
@@ -54,10 +52,7 @@ let to = "";
 	};
 
 	await replaceXml.main(replaceXmlOptions);
-	await fse.copy(`${Manifest}`, `./dist/${manifestFileName}`).then(
-		answer => console.log(pc.yellow(pc.bold(
-			`Copied "${manifestFileName}" to "./dist".`)))
-	);
+	await helper.copy(`${Manifest}`, `./dist/${manifestFileName}`);
 
 	// Create zip file and detect checksum then.
 	const zipFilePath = path.resolve(`./dist/${zipFilename}`);
@@ -86,16 +81,11 @@ let to = "";
 	replaceXmlOptions.checksum = checksum;
 
 	// Bei diesen werden zuerst Vorlagen nach dist/ kopiert und dort erst "replaced".
-	for (const file of [updateXml, changelogXml, releaseTxt])
+	for (const file of [updateXml, releaseTxt])
 	{
 		from = file;
 		to = `./dist/${path.win32.basename(file)}`;
-		await fse.copy(from, to
-		).then(
-			answer => console.log(
-				pc.yellow(pc.bold(`Copied "${from}" to "${to}".`))
-			)
-		);
+		await helper.copy(from, to);
 
 		replaceXmlOptions.xmlFile = path.resolve(to);
 		await replaceXml.main(replaceXmlOptions);
