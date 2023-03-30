@@ -5,6 +5,7 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 1. When a new user is created in the (!)backend(!), inform Super-Users by email? Including the login details of the new user.
 2. The field `Name` is checked for prohibited characters or character strings during registration in the frontend. There is only a simple filtering on the code side. A distinction is NOT made between upper and lower case letters. If the name contains forbidden characters (strings), the registration is aborted with an error message.
 3. Selected users are not allowed to change their user data when editing their profile. An error message is displayed to the user.
+4. Only Joomla 4: Change/Lower minimum password length of Joomla's configuration settimgs "Users > Password Options".
 
 ## Languages
 - de-DE
@@ -23,13 +24,6 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 - `npm run updateCheck` or (faster) `npm outdated`
 - `npm run update` (if needed) or (faster) `npm update --save-dev`
 - `npm install` (if needed)
-
-## PHP Codestyle
-If you think it's worth it.
-- `cd /mnt/z/git-kram/php-cs-fixer-ghsvs`
-- `npm run plg_system_onuserghsvsDry` (= dry test run).
-- `npm run plg_system_onuserghsvs` (= cleans code).
-- `cd /mnt/z/git-kram/plg_system_onuserghsvs` (back to this repo).
 
 ## Build installable ZIP package
 - `node build.js`
