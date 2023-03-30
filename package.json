@@ -2,16 +2,15 @@
 	"name": "plg_system_onuserghsvs",
 	"nameReal": "plg_system_onuserghsvs",
 	"filename": "onuserghsvs",
-	"version": "2022.06.11",
-	"versionCompare": "2022.04.25",
+	"version": "2023.03.30",
+	"versionCompare": "2022.06.11",
 	"update": {
 		"type": "plugin",
 		"folder": "system",
 		"client": "site",
 		"tag": "stable",
 		"targetplatform": [
-			"3.*",
-			"4.*"
+			"4.[23456789]"
 		],
 		"namespace": "Joomla\\Plugin\\System\\OnUserGhsvs"
 	},
@@ -31,14 +30,14 @@
 		"docsDE": "",
 		"docsEN": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
 		"lastTests": [
-			"PHP 8.0",
-			"Joomla 3.10",
-			"Joomla 4.1"
+			"PHP 8.1",
+			"Joomla 4.2",
+			"Joomla 4.3.0-dev"
 		]
 	},
 	"minimumPhp": "7.4.0",
 	"maximumPhp": "8.9999.9999",
-	"minimumJoomla": "3.10.0",
+	"minimumJoomla": "4.2.0",
 	"maximumJoomla": "4.9999.9999",
 	"allowDowngrades": "1",
 	"creationDate": "2021-12-04",
@@ -73,10 +72,7 @@
 		"updateCheck": "npm outdated",
 		"update": "npm update --save-dev"
 	},
-	"devDependencies": {
-		"fs-extra": "^10.1.0",
-		"picocolors": "^1.0.0"
-	},
+	"devDependencies": {},
 	"peerDependencies": {},
 	"browserslist": []
 }
