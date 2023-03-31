@@ -37,15 +37,13 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 
 	public function onContentPrepareForm(Form $form, $data)
 	{
-		if (!$this->app->isClient('administrator'))
-		{
-			return;
-		}
-
+		$isJ3 = version_compare(JVERSION, '4', 'lt');
 		$extension = 'com_users';
 
 		if (
 			$this->params->get('passwordMinimumLength', 0) === 1
+			&& $isJ3 === false
+			&& $this->app->isClient('administrator')
 			&& $this->app->input->get('option', '') === 'com_config'
 			&& ($this->app->input->get('view', '') === 'component' || $this->app->input->get('controller', '') === 'component')
 			&& $this->app->input->get('component', '') === $extension
