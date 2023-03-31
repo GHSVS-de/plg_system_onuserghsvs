@@ -8,7 +8,6 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Component\ComponentHelper;
 
 class PlgSystemOnUserGhsvs extends CMSPlugin
 {
