@@ -21,11 +21,11 @@
 	<allowDowngrades>{{allowDowngrades}}</allowDowngrades>
 
 	<files>
-		<filename plugin="{{filename}}">{{filename}}.php</filename>
+		<folder>language</folder>
+		<folder plugin="{{filename}}">services</folder>
+		<folder>src</folder>
 		<filename>installerScript.php</filename>
 		<filename>LICENSE.txt</filename>
-		<folder>language</folder>
-		<folder>src</folder>
 	</files>
 	{{namespace}}
 	<config{{addfieldprefix}}>
