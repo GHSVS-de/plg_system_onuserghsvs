@@ -1,6 +1,6 @@
 <?php
 
-namespace Joomla\Plugin\System\OnUserGhsvs\Field;
+namespace GHSVS\Plugin\System\OnUserGhsvs\Field;
 
 \defined('_JEXEC') or die;
 
