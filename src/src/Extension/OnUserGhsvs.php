@@ -1,6 +1,11 @@
 <?php
-defined('_JEXEC') or die;
+namespace GHSVS\Plugin\System\OnUserGhsvs\Extension;
 
+\defined('_JEXEC') or die;
+
+use Exception;
+use Joomla\Application\ApplicationInterface;
+use Joomla\CMS\Application\CMSApplication;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -8,24 +13,24 @@ use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Form\Form;
+use Joomla\Input\Input;
+use Joomla\Database\DatabaseAwareTrait;
+use Joomla\Event\DispatcherInterface;
 
-class PlgSystemOnUserGhsvs extends CMSPlugin
+final class OnUserGhsvs extends CMSPlugin
 {
+	use DatabaseAwareTrait;
+	# use UserFactoryAwareTrait;
+
 	/**
 	 * Application object
 	 *
 	 * @var    \Joomla\CMS\Application\CMSApplication
 	 * @since  4.0.0
 	 */
-	protected $app;
+	private $app;
 
-	/**
-	 * Database driver
-	 *
-	 * @var    \Joomla\Database\DatabaseInterface
-	 * @since  4.0.0
-	 */
-	protected $db;
+	private $input;
 
 	/**
 	 * Load plugin language files automatically
@@ -35,18 +40,27 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	 */
 	protected $autoloadLanguage = true;
 
+	public function __construct(
+		DispatcherInterface $dispatcher,
+		array $config,
+		ApplicationInterface $app = null,
+		Input $jinput = null,
+	) {
+		parent::__construct($dispatcher, $config);
+		$this->app = $app;
+		$this->input = $jinput;
+	}
+
 	public function onContentPrepareForm(Form $form, $data)
 	{
-		$isJ3 = version_compare(JVERSION, '4', 'lt');
 		$extension = 'com_users';
 
 		if (
 			$this->params->get('passwordMinimumLength', 0) === 1
-			&& $isJ3 === false
 			&& $this->app->isClient('administrator')
-			&& $this->app->input->get('option', '') === 'com_config'
-			&& ($this->app->input->get('view', '') === 'component' || $this->app->input->get('controller', '') === 'component')
-			&& $this->app->input->get('component', '') === $extension
+			&& $this->input->get('option', '') === 'com_config'
+			&& ($this->input->get('view', '') === 'component' || $this->input->get('controller', '') === 'component')
+			&& $this->input->get('component', '') === $extension
 		) {
 			$min = (int) $this->params->get('minimum_length', 5);
 			$group = null;
@@ -102,7 +116,7 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 
 		// Let's find out the email addresses to notify
 		$superUsers    = [];
-		$specificEmails = $this->params->get('specificEmails', '');
+		$specificEmails = trim($this->params->get('specificEmails', ''));
 
 		if (!empty($specificEmails))
 		{
@@ -160,14 +174,21 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	{
 	}
 
+	/**
+		* Method is called before user data is stored in the database
+		*
+		* @param   array    $oldUser   Holds the old user data.
+		* @param   boolean  $isNew  True if a new user is stored.
+		* @param   array    $newUser   Holds the new user data.
+		*
+		* @return  boolean (???) mixed (???)
+		*/
 	public function onUserBeforeSave($oldUser, $isNew, $newUser)
 	{
 		if ($this->app->getDocument()->getType() !== 'html')
 		{
 			return;
 		}
-
-		$isJ3 = version_compare(JVERSION, '4', 'lt');
 
 		if (
 			$isNew && $this->app->isClient('site')
@@ -199,12 +220,14 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 				{
 					$this->app->enqueueMessage(
 						Text::_('PLG_SYSTEM_ONUSERGHSVS_FILTERNAMEONSAVE_MESSAGE'),
-						$isJ3 ? 'error' : 'danger'
+						'danger'
 					);
 
 					return false;
 				}
 			}
+
+			return true;
 		}
 
 		if (!$isNew && $this->params->get('blockUserSaving', 0) === 1)
@@ -224,27 +247,17 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 
 				if ($allow_admins !== 0)
 				{
-					if ($isJ3)
-					{
-						$isAuthorized = Factory::getUser()->authorise(
-							'core.admin',
-							$allow_admins > 0 ? 'com_users' : null
-						);
-					}
-					else
-					{
-						$isAuthorized = $this->app->getIdentity()->authorise(
-							'core.admin',
-							$allow_admins > 0 ? 'com_users' : null
-						);
-					}
+					$isAuthorized = $this->app->getIdentity()->authorise(
+						'core.admin',
+						$allow_admins > 0 ? 'com_users' : null
+					);
 				}
 
 				if (($feBlock || $beBlock) && !$isAuthorized)
 				{
 					$this->app->enqueueMessage(
 						Text::_('PLG_ONUSERGHSVS_BLOCKUSERSAVING_MESSAGE'),
-						$isJ3 ? 'error' : 'danger'
+						'danger'
 					);
 
 					return false;
@@ -262,126 +275,93 @@ class PlgSystemOnUserGhsvs extends CMSPlugin
 	}
 
 	/**
-	 * Returns the Super Users email information. If you provide a comma separated $email list
-	 * we will check that these emails do belong to Super Users and that they have not blocked
-	 * system emails.
-	 *
-	 * @copyright This method is a copy from Joomla's core plugin updatenotification. Modifications by ghsvs.de will no longer reflect the original work of its authors.
-	 *
-	 * @param   null|string  $email  A list of Super Users to email
-	 *
-	 * @return  array  The list of Super User emails
-	 *
-	 * @since   3.5
-	 */
+		* Returns the Super Users email information. If you provide a comma separated $email list
+		* we will check that these emails do belong to Super Users and that they have not blocked
+		* system emails.
+		* @copyright This method is a copy from Joomla's core plugin updatenotification. Modifications by ghsvs.de will no longer reflect the original work of its authors.
+		*
+		* @param   null|string  $email  A list of Super Users to email
+		*
+		* @return  array  The list of Super User emails
+		*
+		* @since   3.5
+		*/
 	private function getSuperUsers($email = null)
 	{
-		$db = $this->db;
+		$db = $this->getDatabase();
+		$emails = [];
 
 		// Convert the email list to an array
-		if (!empty($email))
-		{
-			$temp   = explode(',', $email);
-			$emails = [];
+		if (!empty($email)) {
+			$temp = explode(',', $email);
 
-			foreach ($temp as $entry)
-			{
-				$entry    = trim($entry);
-				$emails[] = $db->q($entry);
+			foreach ($temp as $entry) {
+					$emails[] = trim($entry);
 			}
 
 			$emails = array_unique($emails);
-		}
-		else
-		{
-			$emails = [];
 		}
 
 		// Get a list of groups which have Super User privileges
 		$ret = [];
 
-		try
-		{
-			$rootId    = Table::getInstance('Asset', 'JTable')->getRootId();
+		try {
+			$rootId    = Table::getInstance('Asset')->getRootId();
 			$rules     = Access::getAssetRules($rootId)->getData();
 			$rawGroups = $rules['core.admin']->getData();
 			$groups    = [];
 
-			if (empty($rawGroups))
-			{
+			if (empty($rawGroups)) {
 				return $ret;
 			}
 
-			foreach ($rawGroups as $g => $enabled)
-			{
-				if ($enabled)
-				{
-					$groups[] = $db->q($g);
+			foreach ($rawGroups as $g => $enabled) {
+				if ($enabled) {
+					$groups[] = $g;
 				}
 			}
 
-			if (empty($groups))
-			{
+			if (empty($groups)) {
 				return $ret;
 			}
-		}
-		catch (Exception $exc)
-		{
+		} catch (\Exception $exc) {
 			return $ret;
 		}
 
 		// Get the user IDs of users belonging to the SA groups
-		try
-		{
+		try {
 			$query = $db->getQuery(true)
-				->select($db->qn('user_id'))
-				->from($db->qn('#__user_usergroup_map'))
-				->where($db->qn('group_id') . ' IN(' . implode(',', $groups) . ')');
-			$db->setQuery($query);
-			$rawUserIDs = $db->loadColumn(0);
+			->select($db->quoteName('user_id'))
+			->from($db->quoteName('#__user_usergroup_map'))
+			->whereIn($db->quoteName('group_id'), $groups);
 
-			if (empty($rawUserIDs))
-			{
+			$db->setQuery($query);
+			$userIDs = $db->loadColumn(0);
+
+			if (empty($userIDs)) {
 				return $ret;
 			}
-
-			$userIDs = [];
-
-			foreach ($rawUserIDs as $id)
-			{
-				$userIDs[] = $db->q($id);
-			}
-		}
-		catch (Exception $exc)
-		{
+		} catch (\Exception $exc) {
 			return $ret;
 		}
 
 		// Get the user information for the Super Administrator users
-		try
-		{
+		try {
 			$query = $db->getQuery(true)
-				->select(
-					[
-						$db->qn('id'),
-						$db->qn('username'),
-						$db->qn('email'),
-					]
-				)->from($db->qn('#__users'))
-				->where($db->qn('id') . ' IN(' . implode(',', $userIDs) . ')')
-				->where($db->qn('block') . ' = 0')
-				->where($db->qn('sendEmail') . ' = ' . $db->q('1'));
+			->select($db->quoteName(['id', 'username', 'email']))
+			->from($db->quoteName('#__users'))
+			->whereIn($db->quoteName('id'), $userIDs)
+			->where($db->quoteName('block') . ' = 0')
+			->where($db->quoteName('sendEmail') . ' = 1');
 
-			if (!empty($emails))
-			{
-				$query->where('LOWER(' . $db->qn('email') . ') IN(' . implode(',', array_map('strtolower', $emails)) . ')');
+			if (!empty($emails)) {
+				$lowerCaseEmails = array_map('strtolower', $emails);
+				$query->whereIn('LOWER(' . $db->quoteName('email') . ')', $lowerCaseEmails, ParameterType::STRING);
 			}
 
 			$db->setQuery($query);
 			$ret = $db->loadObjectList();
-		}
-		catch (Exception $exc)
-		{
+		} catch (\Exception $exc) {
 			return $ret;
 		}
 
