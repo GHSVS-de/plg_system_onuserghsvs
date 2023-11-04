@@ -22,7 +22,14 @@ class plgSystemOnUserGhsvsInstallerScript extends InstallerScript
 	 * @var    array
 	 * @since  2.0
 	 */
-	protected $deleteFiles = [];
+	protected $deleteFiles = [
+		'/plugins/system/onuserghsvs/language/en-GB/en-GB.plg_system_onuserghsvs.ini',
+		'/plugins/system/onuserghsvs/language/en-GB/en-GB.plg_system_onuserghsvs.sys.ini',
+		'/plugins/system/onuserghsvs/language/de-DE/de-DE.plg_system_onuserghsvs.ini',
+		'/plugins/system/onuserghsvs/language/de-DE/de-DE.plg_system_onuserghsvs.sys.ini',
+		'/plugins/system/onuserghsvs/onuserghsvs.php',
+		'/plugins/system/onuserghsvs/src/Field/j3/usersghsvs.php',
+	];
 
 	/**
 	 * A list of folders to be deleted with method removeFiles().
