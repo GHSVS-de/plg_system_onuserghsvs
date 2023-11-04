@@ -1,0 +1,28 @@
+2023.11.05
+
+Joomla system plugin OnUserGhsvs 2023.11.05
+
+Checksum entities: `&lt;sha256&gt;d2b4b583b38bb5008b13e13a8db28e0bf25c449dbc36a3ee05eda793264b0a47&lt;/sha256&gt;`
+
+Joomla system plugin. Performs additional actions when users are edited or saved.
+
+### Joomla 4.3+, Joomla 5
+
+### Download
+[plg_system_onuserghsvs-2023.11.05.zip](https://github.com/GHSVS-de/plg_system_onuserghsvs/raw/2023.11.05/dist/plg_system_onuserghsvs-2023.11.05.zip)
+
+### Joomla-Target-Platform(s)
+4\.(3|4|5|6|7|8|9|10|11|12|13|14|15), 5.&ast;
+
+### For the interested ones
+- New "modern" plugin structure.
+- [Compare releases 2023.03.30...2023.11.05](https://github.com/GHSVS-de/plg_system_onuserghsvs/compare/2023.03.30...2023.11.05)
+- minimumJoomla: 4.3.0
+- maximumJoomla: 5.9999.9999
+- minimumPhp: 7.4.0
+- maximumPhp:
+- Checksum: `<sha256>d2b4b583b38bb5008b13e13a8db28e0bf25c449dbc36a3ee05eda793264b0a47</sha256>`
+- Readme: https://github.com/GHSVS-de/plg_system_onuserghsvs#readme
+- Updates XML: https://raw.githubusercontent.com/GHSVS-de/upadateservers/master/plg_system_onuserghsvs-update.xml
+- Last tests: PHP 8.2<br>PHP 8.1<br>Joomla 4.4<br>Joomla 5.0
+- Language files: de-DE<br>en-GB
