@@ -4,7 +4,9 @@
 	"filename": "onuserghsvs",
 	"version": "2023.11.04",
 	"versionCompare": "2023.03.30",
+	"versionSub": "",
 	"update": {
+		"infourl": "https://github.com/GHSVS-de/plg_system_onuserghsvs{{thisRelease}}",
 		"type": "plugin",
 		"folder": "system",
 		"client": "site",
