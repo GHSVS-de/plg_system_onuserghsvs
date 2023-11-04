@@ -37,7 +37,9 @@ class plgSystemOnUserGhsvsInstallerScript extends InstallerScript
 	 * @var    array
 	 * @since  2.0
 	 */
-	protected $deleteFolders = [];
+	protected $deleteFolders = [
+		'/plugins/system/onuserghsvs/src/Field/j3',
+	];
 
 	public function preflight($type, $parent)
 	{
