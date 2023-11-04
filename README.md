@@ -5,7 +5,7 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 1. When a new user is created in the (!)backend(!), inform Super-Users by email? Including the login details of the new user.
 2. The field `Name` is checked for prohibited characters or character strings during registration in the frontend. There is only a simple filtering on the code side. A distinction is NOT made between upper and lower case letters. If the name contains forbidden characters (strings), the registration is aborted with an error message.
 3. Selected users are not allowed to change their user data when editing their profile. An error message is displayed to the user.
-4. Only Joomla 4: Change/Lower minimum password length of Joomla's configuration settimgs "Users > Password Options".
+4. Joomla 4+: Change/Lower minimum password length of Joomla's configuration settimgs "Users > Password Options".
 
 ## Languages
 - de-DE
