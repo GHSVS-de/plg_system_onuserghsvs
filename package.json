@@ -15,7 +15,7 @@
 			"4\\.(3|4|5|6|7|8|9|10|11|12|13|14|15)",
 			"5.*"
 		],
-		"namespace": "Joomla\\Plugin\\System\\OnUserGhsvs"
+		"namespace": "GHSVS\\Plugin\\System\\OnUserGhsvs"
 	},
 	"releaseTxt": {
 		"title": "Joomla system plugin OnUserGhsvs",
