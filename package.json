@@ -30,7 +30,7 @@
 		"projecturl": "https://github.com/GHSVS-de/plg_system_onuserghsvs",
 		"infosDE": "",
 		"infosEN": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
-		"docsDE": "",
+		"docsDE": "https://ghsvs.de/programmierer-schnipsel/joomla/112-benutzer-sollen-ihre-accountdaten-nicht-aendern-duerfen",
 		"docsEN": "https://github.com/GHSVS-de/plg_system_onuserghsvs#readme",
 		"lastTests": [
 			"PHP 8.2",
