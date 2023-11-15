@@ -7,6 +7,9 @@ Joomla system plugin. Performs additional actions when users are edited or saved
 3. Selected users are not allowed to change their user data when editing their profile. An error message is displayed to the user.
 4. Joomla 4+: Change/Lower minimum password length of Joomla's configuration settimgs "Users > Password Options".
 
+## Deutsche Beschreibung
+https://ghsvs.de/programmierer-schnipsel/joomla/112-benutzer-sollen-ihre-accountdaten-nicht-aendern-duerfen
+
 ## Languages
 - de-DE
 - en-GB
